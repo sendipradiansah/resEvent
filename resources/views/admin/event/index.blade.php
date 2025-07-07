@@ -19,6 +19,7 @@
                 <th>Deskripsi Event</th>
                 <th>Jadwal Event</th>
                 <th class="w-10">Kuota Maksimal</th>
+                <th class="w-10">Total Pendaftar</th>
                 <th class="text-center">Aksi</th>
             </tr>
         </thead>
@@ -31,6 +32,7 @@
                 <td class="w-25">{{ $event->description }}</td>
                 <td>{{ date('d-M-Y H:i', strtotime($event->schedule)) }}</td>
                 <td>{{ $event->max_quota }}</td>
+                <td>{{ $event->reservations_count }}</td>
                 <td class="text-center">
                     <form action="{{ route('admin.event.destroy', $event->id) }}" method="POST">
                         <a href="{{ route('admin.event.show', $event->id) }}" class="btn btn-sm btn-warning">Detail</a>

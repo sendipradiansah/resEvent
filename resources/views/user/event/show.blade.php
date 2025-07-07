@@ -38,9 +38,9 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <label for="telepon" class="col-sm-2 col-form-label">Sisa Kuota</label>
+                    <label for="telepon" class="col-sm-2 col-form-label">Total Pendaftar</label>
                     <div class="col-sm-10">
-                        <span for="telepon">{{ $event->max_quota - $totalQuotaReserved }}</span>
+                        <span for="telepon">{{ $totalQuotaReserved }}</span>
                     </div>
                 </div>
                 @if(!$hasReserved)

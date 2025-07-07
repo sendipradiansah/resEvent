@@ -25,7 +25,7 @@ class EventController extends Controller
     {
         $textSearch = $request->search;
 
-        $query = Event::query();
+        $query = Event::withCount('reservations');
 
         if (!empty($textSearch)) {
 
@@ -61,12 +61,21 @@ class EventController extends Controller
                 $textSearch = $foundMonth;
             }
 
+            if (is_numeric($textSearch)) {
+                $textSearchInt = (int)$textSearch;
 
-            $query->where('name', 'like', '%' . $textSearch . '%')
-                ->orWhere('description', 'like', '%' . $textSearch . '%')
-                ->orWhere('schedule', 'like', '%' . $textSearch . '%')
-                ->orWhere('max_quota', 'like', '%' . $textSearch . '%')
-                ->orWhereRaw('MONTHNAME(schedule) LIKE ?', ['%' . $textSearch . '%']);
+                $query->where(function ($q) use ($textSearchInt) {
+                    $q->where('max_quota', '>=', $textSearchInt)
+                        ->orHaving('reservations_count', '>=', $textSearchInt);
+                });
+            } else {
+                $query->where(function ($q) use ($textSearch) {
+                    $q->where('name', 'like', '%' . $textSearch . '%')
+                        ->orWhere('description', 'like', '%' . $textSearch . '%')
+                        ->orWhere('schedule', 'like', '%' . $textSearch . '%')
+                        ->orWhereRaw('MONTHNAME(schedule) LIKE ?', ['%' . $textSearch . '%']);
+                });
+            }
         }
 
         $events = $query->latest()->paginate(10);
