@@ -4,7 +4,7 @@
 2. Buat database pada dengan nama "db_resevent" pada aplikasi database
 3. Buka command pada VS Code atau yang lainnya, ketikkan:
 
-    - php migrate
+    - php artisan migrate
     - Buat akun admin untuk pertama kali masuk aplikasi dengan cara:
       Ketikkan "php artisan tinker" pada cmd vs code atau lainnya lalu ketikkan:
 
